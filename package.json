@@ -1,0 +1,32 @@
+{
+  "name": "fmcg-assistant",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "db:migrate": "pnpm --filter @fmcg/db migrate",
+    "dev:api": "pnpm --filter @fmcg/api dev",
+    "dev:worker": "pnpm --filter @fmcg/worker dev",
+    "channel:add": "pnpm --filter @fmcg/api channel:add",
+    "wa:send-template": "pnpm --filter @fmcg/api wa:send-template",
+    "wa:simulate": "pnpm --filter @fmcg/api wa:simulate",
+    "chat": "pnpm --filter @fmcg/api chat",
+    "wa:test": "pnpm --filter @fmcg/wa-test start",
+    "catalogue:import": "pnpm --filter @fmcg/api catalogue:import",
+    "user:create": "pnpm --filter @fmcg/api user:create",
+    "dev:web": "pnpm --filter @fmcg/web dev",
+    "dev:shop": "pnpm --filter @fmcg/shop dev",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p apps/web/tsconfig.json --noEmit && tsc -p apps/shop/tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "@types/pg": "8.11.10",
+    "tsx": "4.19.2",
+    "typescript": "5.7.2",
+    "vitest": "2.1.8"
+  }
+}

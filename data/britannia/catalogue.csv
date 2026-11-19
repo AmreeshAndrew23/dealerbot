@@ -1,0 +1,25 @@
+sku_code,name,category,base_unit,pack_units,mrp_per_pcs,dealer_price_per_pcs,aliases
+BR-GD-CASH-10,Good Day Cashew Cookies Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,good day cashew;gudday cashew;goodday 10;குட் டே முந்திரி
+BR-GD-CASH-30,Good Day Cashew Cookies Rs30,Biscuits,PCS,PCS=1;BOX=12;CASE=72,30.00,25.80,good day 30;gudday big;good day cashew 30
+BR-GD-BUTR-10,Good Day Butter Cookies Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,good day butter;gudday butter;குட் டே பட்டர்
+BR-GD-PSTA-10,Good Day Pista Badam Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,good day pista;pista badam
+BR-MG-250,Marie Gold 250g,Biscuits,PCS,PCS=1;BOX=12;CASE=48,40.00,34.40,marie gold;mari gold;marie;மேரி கோல்டு
+BR-MG-10,Marie Gold Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,marie 10;marie small;மேரி 10
+BR-MB-10,Milk Bikis Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,milk bikis;milk biscuit;milkbikis;மில்க் பிகிஸ்
+BR-MB-250,Milk Bikis 250g,Biscuits,PCS,PCS=1;BOX=12;CASE=48,40.00,34.40,milk bikis big;milk bikis 250
+BR-BOUR-10,Bourbon Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,bourbon;borbon;போர்பன்
+BR-BOUR-30,Bourbon Rs30,Biscuits,PCS,PCS=1;BOX=12;CASE=72,30.00,25.80,bourbon 30;bourbon big
+BR-TIG-5,Tiger Glucose Rs5,Biscuits,PCS,PCS=1;BOX=24;CASE=288,5.00,4.30,tiger 5;tiger glucose;டைகர்
+BR-TIG-10,Tiger Glucose Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,tiger 10;tiger
+BR-NC-DIG-100,NutriChoice Digestive 100g,Biscuits,PCS,PCS=1;BOX=12;CASE=72,25.00,21.50,nutri choice;nutrichoice;digestive;நியூட்ரி சாய்ஸ்
+BR-5050-10,50-50 Maska Chaska Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,50 50;fifty fifty;maska chaska;பிஃப்டி பிஃப்டி
+BR-LH-10,Little Hearts Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,little hearts;little heart;லிட்டில் ஹார்ட்ஸ்
+BR-TRT-JJ-10,Treat Jim Jam Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,jim jam;treat jim jam;ஜிம் ஜாம்
+BR-PM-30,Pure Magic Chocolush Rs30,Biscuits,PCS,PCS=1;BOX=12;CASE=72,30.00,25.80,pure magic;chocolush
+BR-NT-10,Nice Time Rs10,Biscuits,PCS,PCS=1;BOX=12;CASE=144,10.00,8.60,nice time;nicetime;நைஸ் டைம்
+BR-RUSK-200,Toastea Premium Rusk 200g,Rusk,PCS,PCS=1;BOX=12;CASE=36,45.00,38.70,rusk;toastea;ரஸ்க்
+BR-CAKE-FRT-55,Fruit Cake Rs20,Cakes,PCS,PCS=1;BOX=12;CASE=72,20.00,17.20,fruit cake;cake;கேக்
+BR-CAKE-GOB-10,Gobbles Cake Rs10,Cakes,PCS,PCS=1;BOX=24;CASE=144,10.00,8.60,gobbles;gobbles cake
+BR-BRD-WHT-400,White Bread 400g,Bread,PCS,PCS=1;TRAY=12,45.00,40.50,bread;white bread;ப்ரெட்
+BR-CHS-SLC-200,Cheese Slices 200g,Dairy,PCS,PCS=1;BOX=10,135.00,120.00,cheese;cheese slice;சீஸ்
+BR-CRS-15,Treat Croissant Rs15,Croissant,PCS,PCS=1;BOX=12;CASE=72,15.00,12.90,croissant;treat croissant

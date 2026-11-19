@@ -1,0 +1,14 @@
+{
+  "name": "@fmcg/channel",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@fmcg/config": "workspace:*",
+    "@fmcg/contracts": "workspace:*",
+    "@fmcg/db": "workspace:*",
+    "pg": "8.13.1",
+    "pg-boss": "10.1.6"
+  }
+}

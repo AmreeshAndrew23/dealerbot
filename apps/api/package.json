@@ -1,0 +1,28 @@
+{
+  "name": "@fmcg/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "channel:add": "tsx src/cli/add-channel-account.ts",
+    "wa:send-template": "tsx src/cli/send-template.ts",
+    "wa:simulate": "tsx src/cli/simulate-inbound.ts",
+    "user:create": "tsx src/cli/create-user.ts",
+    "chat": "tsx src/cli/chat.ts",
+    "catalogue:import": "tsx src/cli/import-catalogue.ts"
+  },
+  "dependencies": {
+    "@fastify/cookie": "11.0.1",
+    "@fmcg/catalogue": "workspace:*",
+    "@fmcg/channel": "workspace:*",
+    "@fmcg/config": "workspace:*",
+    "@fmcg/contracts": "workspace:*",
+    "@fmcg/db": "workspace:*",
+    "@fmcg/orders": "workspace:*",
+    "fastify": "5.2.0",
+    "fastify-plugin": "5.0.1",
+    "zod": "3.24.1"
+  }
+}

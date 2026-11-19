@@ -1,0 +1,12 @@
+import type { z } from "zod";
+import { badRequest } from "./errors";
+
+export function parse<T extends z.ZodTypeAny>(schema: T, data: unknown): z.infer<T> {
+  const r = schema.safeParse(data ?? {});
+  if (!r.success) {
+    throw badRequest("Request is not valid.", {
+      fields: r.error.issues.map((i) => ({ path: i.path.join("."), message: i.message })),
+    });
+  }
+  return r.data;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@fmcg/orders",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@fmcg/catalogue": "workspace:*",
+    "@fmcg/config": "workspace:*",
+    "@fmcg/db": "workspace:*",
+    "zod": "3.24.1"
+  }
+}
