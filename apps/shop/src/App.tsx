@@ -20,9 +20,18 @@ import { Account } from "./screens/Account";
 
 export function App() {
   const qc = useQueryClient();
-  const me = useQuery({ queryKey: ["me"], queryFn: () => api<Me>("/me"), retry: false, refetchInterval: 15_000 });
+  // Signed out, nothing re-checks on a timer or on coming back to the tab: each re-check used to
+  // swap the sign-in form for "Loading…" and wipe what was typed into it.
+  const me = useQuery({
+    queryKey: ["me"],
+    queryFn: () => api<Me>("/me"),
+    retry: false,
+    refetchInterval: (q) => (q.state.data ? 15_000 : false),
+    refetchOnWindowFocus: (q) => !!q.state.data,
+  });
   const signedOut = me.error instanceof ApiError && me.error.status === 401;
-  if (me.isPending) return <div className="splash">Loading…</div>;
+  // Only the very first check shows the splash; later ones keep the current screen mounted.
+  if (me.isPending && me.data === undefined && me.errorUpdateCount === 0) return <div className="splash">Loading…</div>;
   if (signedOut || !me.data || me.data.dealers.length === 0) {
     if (me.error && !signedOut) {
       return (
