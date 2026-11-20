@@ -60,7 +60,7 @@ export async function writeAudit(
   tx: Tx,
   e: {
     tenant_id: string | null;
-    actor_type: "system" | "user" | "connector" | "provider";
+    actor_type: "system" | "user" | "connector" | "provider" | "platform_admin";
     actor_id: string | null;
     action: string;
     entity_type: string;

@@ -17,10 +17,12 @@
     "wa:test": "pnpm --filter @fmcg/wa-test start",
     "catalogue:import": "pnpm --filter @fmcg/api catalogue:import",
     "user:create": "pnpm --filter @fmcg/api user:create",
+    "admin:create": "pnpm --filter @fmcg/api admin:create",
+    "dev:admin": "pnpm --filter @fmcg/admin dev",
     "dev:web": "pnpm --filter @fmcg/web dev",
     "dev:shop": "pnpm --filter @fmcg/shop dev",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p apps/web/tsconfig.json --noEmit && tsc -p apps/shop/tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p apps/web/tsconfig.json --noEmit && tsc -p apps/shop/tsconfig.json --noEmit && tsc -p apps/admin/tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@types/node": "22.10.2",

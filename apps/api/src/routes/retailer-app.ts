@@ -132,7 +132,8 @@ async function matchCode(phone: string, code: string, exceptTenants: string[] = 
   const rows = (
     await getPool().query<{ id: string; tenant_id: string; app_code_hash: string; locked: boolean }>(
       `SELECT id, tenant_id, app_code_hash, COALESCE(app_locked_until > now(), false) AS locked
-         FROM retailers WHERE phone_e164 = $1 AND active AND app_code_hash IS NOT NULL AND NOT (tenant_id = ANY($2::uuid[])) ORDER BY created_at`,
+         FROM retailers WHERE phone_e164 = $1 AND active AND app_code_hash IS NOT NULL AND NOT (tenant_id = ANY($2::uuid[]))
+           AND tenant_id IN (SELECT id FROM tenants WHERE status = 'active') ORDER BY created_at`,
       [phone, exceptTenants],
     )
   ).rows;

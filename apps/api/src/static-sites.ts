@@ -1,6 +1,7 @@
 // Production hosting (Railway): the API also serves the two built web apps from the same address,
 // so both sign-in cookies stay same-origin with the /v1 routes (no CORS, no third-party cookies).
 //   /shop/...   the customer app (apps/shop/dist, built with base "/shop/")
+//   /admin/...  the platform admin app (apps/admin/dist, built with base "/admin/")
 //   /...        the staff dashboard (apps/web/dist; unknown paths get index.html for its router)
 // /v1, /webhooks and /health are never answered with a page: unknown API paths stay JSON 404s.
 // Off in development (Vite serves the apps); turned on with SERVE_STATIC=true.
@@ -41,21 +42,27 @@ async function send(reply: FastifyReply, file: string) {
     .header("content-type", TYPES[ext] ?? "application/octet-stream")
     .header("cache-control", hashed ? "public, max-age=31536000, immutable" : "no-cache")
     .header("x-content-type-options", "nosniff")
+    .header("x-frame-options", "DENY")
     .send(await readFile(file));
 }
 
-export function registerStaticSites(app: FastifyInstance, dirs: { web: string; shop: string }) {
+export function registerStaticSites(app: FastifyInstance, dirs: { web: string; shop: string; admin: string }) {
   const web = path.resolve(dirs.web);
-  const shop = path.resolve(dirs.shop);
   const notFound = (req: FastifyRequest, reply: FastifyReply) =>
     reply.status(404).send({ error: { code: "NOT_FOUND", message: "Route not found.", details: {}, request_id: req.id } });
 
-  app.get("/shop", (_req, reply) => reply.redirect("/shop/", 301));
-  app.get("/shop/*", async (req, reply) => {
-    const rel = (req.params as { "*": string })["*"];
-    const file = (rel && (await fileIn(shop, rel))) || (await fileIn(shop, "index.html"));
-    return file ? send(reply, file) : notFound(req, reply);
-  });
+  // A single-page app under its own folder: a file if there is one, else its index.html.
+  const subSite = (prefix: string, dir: string) => {
+    const root = path.resolve(dir);
+    app.get(prefix, (_req, reply) => reply.redirect(`${prefix}/`, 301));
+    app.get(`${prefix}/*`, async (req, reply) => {
+      const rel = (req.params as { "*": string })["*"];
+      const file = (rel && (await fileIn(root, rel))) || (await fileIn(root, "index.html"));
+      return file ? send(reply, file) : notFound(req, reply);
+    });
+  };
+  subSite("/shop", dirs.shop);
+  subSite("/admin", dirs.admin);
   app.get("/*", async (req, reply) => {
     const url = req.url.split("?")[0]!;
     if (API_PREFIXES.some((p) => url === p || url.startsWith(p.endsWith("/") ? p : p + "/"))) return notFound(req, reply);

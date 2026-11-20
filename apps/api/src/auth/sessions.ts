@@ -55,6 +55,7 @@ export async function loadSession(token: string | undefined): Promise<SessionUse
        FROM sessions s
        JOIN users u ON u.id = s.user_id AND u.active
        JOIN memberships m ON m.tenant_id = s.tenant_id AND m.user_id = s.user_id AND m.active
+       JOIN tenants t ON t.id = s.tenant_id AND t.status = 'active'  -- a suspended dealer signs its staff out
       WHERE s.token_hash = $1 AND s.expires_at > now()`,
     [tokenHash],
   );

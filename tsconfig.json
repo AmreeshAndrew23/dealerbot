@@ -14,5 +14,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": ["apps/*/src", "packages/*/src", "packages/*/test", "apps/*/test"],
-  "exclude": ["apps/web", "apps/shop"]
+  "exclude": ["apps/web", "apps/shop", "apps/admin"]
 }

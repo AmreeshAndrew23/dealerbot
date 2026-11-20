@@ -25,7 +25,7 @@ export async function describeMe(userId: string, tenantId: string, role: Role) {
   const r = await getPool().query<{ id: string; name: string; timezone: string; role: Role; email: string; display_name: string }>(
     `SELECT t.id, t.name, t.timezone, m.role, u.email, u.display_name
        FROM memberships m JOIN tenants t ON t.id = m.tenant_id JOIN users u ON u.id = m.user_id
-      WHERE m.user_id = $1 AND m.active ORDER BY t.name`,
+      WHERE m.user_id = $1 AND m.active AND t.status = 'active' ORDER BY t.name`,
     [userId],
   );
   const current = r.rows.find((x) => x.id === tenantId);
@@ -59,12 +59,14 @@ export const authRoutes: FastifyPluginAsync<{ secureCookie: boolean }> = async (
       throw new ApiError(401, "INVALID_CREDENTIALS", "Email or password is incorrect.");
     }
     const m = (
-      await getPool().query<{ tenant_id: string; role: Role }>(
-        `SELECT tenant_id, role FROM memberships WHERE user_id = $1 AND active ORDER BY (tenant_id = $2) DESC, created_at`,
+      await getPool().query<{ tenant_id: string; role: Role; status: string }>(
+        `SELECT m.tenant_id, m.role, t.status FROM memberships m JOIN tenants t ON t.id = m.tenant_id
+          WHERE m.user_id = $1 AND m.active ORDER BY (t.status = 'active') DESC, (m.tenant_id = $2) DESC, m.created_at`,
         [u.id, body.tenant_id ?? null],
       )
     ).rows[0];
     if (!m) throw forbidden("Your account is not active for any distributor.");
+    if (m.status !== "active") throw new ApiError(403, "DEALER_SUSPENDED", "This distributor's account is suspended. Contact support.");
     failures.delete(key);
     await createSession(u.id, m.tenant_id, req, reply, secureCookie);
     await withTx((tx) =>
@@ -88,7 +90,7 @@ export const authRoutes: FastifyPluginAsync<{ secureCookie: boolean }> = async (
     const s = requireStaff(req);
     const body = parse(z.object({ tenant_id: z.string().uuid() }), req.body);
     const m = (
-      await getPool().query<{ role: Role }>(`SELECT role FROM memberships WHERE user_id = $1 AND tenant_id = $2 AND active`, [s.userId, body.tenant_id])
+      await getPool().query<{ role: Role }>(`SELECT m.role FROM memberships m JOIN tenants t ON t.id = m.tenant_id AND t.status = 'active' WHERE m.user_id = $1 AND m.tenant_id = $2 AND m.active`, [s.userId, body.tenant_id])
     ).rows[0];
     if (!m) throw notFound("Distributor");
     await destroySession(s.tokenHash);
@@ -100,7 +102,7 @@ export const authRoutes: FastifyPluginAsync<{ secureCookie: boolean }> = async (
   app.get("/v1/auth/invitations/:token", async (req) => {
     const { token } = req.params as { token: string };
     const r = await getPool().query<{ email: string; role: Role; tenant_name: string }>(
-      `SELECT i.email, i.role, t.name AS tenant_name FROM invitations i JOIN tenants t ON t.id = i.tenant_id
+      `SELECT i.email, i.role, t.name AS tenant_name FROM invitations i JOIN tenants t ON t.id = i.tenant_id AND t.status = 'active'
         WHERE i.token_hash = $1 AND i.accepted_at IS NULL AND i.expires_at > now()`,
       [sha256(token)],
     );
@@ -118,8 +120,8 @@ export const authRoutes: FastifyPluginAsync<{ secureCookie: boolean }> = async (
     const result = await withTx(async (tx) => {
       const inv = (
         await tx.query<{ id: string; tenant_id: string; email: string; role: Role }>(
-          `SELECT id, tenant_id, email, role FROM invitations
-            WHERE token_hash = $1 AND accepted_at IS NULL AND expires_at > now() FOR UPDATE`,
+          `SELECT i.id, i.tenant_id, i.email, i.role FROM invitations i JOIN tenants t ON t.id = i.tenant_id AND t.status = 'active'
+            WHERE i.token_hash = $1 AND i.accepted_at IS NULL AND i.expires_at > now() FOR UPDATE OF i`,
           [sha256(body.token)],
         )
       ).rows[0];

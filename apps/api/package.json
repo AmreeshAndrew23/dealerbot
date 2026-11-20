@@ -10,6 +10,7 @@
     "wa:send-template": "tsx src/cli/send-template.ts",
     "wa:simulate": "tsx src/cli/simulate-inbound.ts",
     "user:create": "tsx src/cli/create-user.ts",
+    "admin:create": "tsx src/cli/create-admin.ts",
     "chat": "tsx src/cli/chat.ts",
     "catalogue:import": "tsx src/cli/import-catalogue.ts"
   },

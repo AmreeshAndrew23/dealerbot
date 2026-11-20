@@ -24,6 +24,34 @@ importers:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.10.2)
 
+  apps/admin:
+    dependencies:
+      '@tanstack/react-query':
+        specifier: 5.62.8
+        version: 5.62.8(react@18.3.1)
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: 18.3.17
+        version: 18.3.17
+      '@types/react-dom':
+        specifier: 18.3.5
+        version: 18.3.5(@types/react@18.3.17)
+      '@vitejs/plugin-react':
+        specifier: 4.3.4
+        version: 4.3.4(vite@5.4.11(@types/node@22.10.2))
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vite:
+        specifier: 5.4.11
+        version: 5.4.11(@types/node@22.10.2)
+
   apps/api:
     dependencies:
       '@fastify/cookie':

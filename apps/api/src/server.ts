@@ -13,6 +13,7 @@ import { catalogueRoutes } from "./routes/catalogue";
 import { orderRoutes } from "./routes/orders";
 import { retailerRoutes } from "./routes/retailers";
 import { retailerAppRoutes } from "./routes/retailer-app";
+import { adminRoutes } from "./routes/admin";
 import type { Extractor } from "@fmcg/orders";
 import { ApiError } from "./lib/errors";
 import { registerStaticSites } from "./static-sites";
@@ -89,6 +90,7 @@ export function buildServer(deps: ServerDeps, opts: { logger?: boolean } = {}): 
   app.register(orderRoutes);
   app.register(retailerRoutes, { appUrl: deps.config.RETAILER_APP_URL });
   app.register(retailerAppRoutes, { secureCookie: deps.secureCookie ?? true, extract: deps.extract });
+  app.register(adminRoutes, { secureCookie: deps.secureCookie ?? true });
 
   app.get("/health", async (_req, reply) => {
     try {
@@ -101,7 +103,11 @@ export function buildServer(deps: ServerDeps, opts: { logger?: boolean } = {}): 
 
   app.register(whatsappWebhookRoutes, deps);
   if (deps.config.SERVE_STATIC) {
-    registerStaticSites(app, { web: path.join(repoRoot, "apps/web/dist"), shop: path.join(repoRoot, "apps/shop/dist") });
+    registerStaticSites(app, {
+      web: path.join(repoRoot, "apps/web/dist"),
+      shop: path.join(repoRoot, "apps/shop/dist"),
+      admin: path.join(repoRoot, "apps/admin/dist"),
+    });
   }
   return app;
 }

@@ -78,7 +78,7 @@ export async function loadAccount(tokenHash: string): Promise<RetailerAccount | 
     `SELECT s.retailer_id, s.tenant_id, t.name AS tenant_name, r.shop_name, r.contact_name, r.phone_e164
        FROM retailer_sessions s
        JOIN retailers r ON r.tenant_id = s.tenant_id AND r.id = s.retailer_id AND r.active AND r.app_code_hash IS NOT NULL
-       JOIN tenants t ON t.id = s.tenant_id
+       JOIN tenants t ON t.id = s.tenant_id AND t.status = 'active'  -- a suspended dealer drops out
       WHERE s.token_hash = $1 AND s.expires_at > now()
       ORDER BY s.created_at, t.name`,
     [tokenHash],
